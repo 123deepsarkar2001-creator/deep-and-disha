@@ -1093,121 +1093,7 @@ footer{
   </section>
 
   
-/* ============================================================
-   8. CINEMATIC FRAMES OF US PHOTO CAROUSEL
-   ============================================================ */
 
-const photoSlides = [
-  ...document.querySelectorAll('.photo-slide')
-];
-
-const photoCounter = document.getElementById('photoCounter');
-const photoCarousel = document.getElementById('photoCarousel');
-
-let activePhoto = 0;
-
-function updatePhotoCarousel() {
-
-  const total = photoSlides.length;
-
-  photoSlides.forEach((slide, index) => {
-
-    slide.className = 'photo-slide';
-
-    const position = (index - activePhoto + total) % total;
-
-    if (position === 0) {
-      slide.classList.add('active');
-    }
-    else if (position === 1) {
-      slide.classList.add('next');
-    }
-    else if (position === total - 1) {
-      slide.classList.add('previous');
-    }
-    else if (position <= total / 2) {
-      slide.classList.add('hidden-right');
-    }
-    else {
-      slide.classList.add('hidden-left');
-    }
-
-    const image = slide.querySelector('img');
-
-    function setBackdrop() {
-      if (image.naturalWidth > 0) {
-        slide.style.setProperty(
-          '--photo-background',
-          `url("${image.src}")`
-        );
-      }
-    }
-
-    if (image.complete) {
-      setBackdrop();
-    } else {
-      image.addEventListener('load', setBackdrop, { once:true });
-    }
-
-  });
-
-  photoCounter.textContent =
-    String(activePhoto + 1).padStart(2, '0') +
-    ' / ' +
-    String(total).padStart(2, '0');
-}
-
-function changePhoto(direction) {
-
-  activePhoto =
-    (activePhoto + direction + photoSlides.length) %
-    photoSlides.length;
-
-  updatePhotoCarousel();
-}
-
-document.getElementById('previousPhoto')
-  .addEventListener('click', () => changePhoto(-1));
-
-document.getElementById('nextPhoto')
-  .addEventListener('click', () => changePhoto(1));
-
-/* Touch swipe support for mobile */
-
-let touchStartX = 0;
-let touchEndX = 0;
-
-photoCarousel.addEventListener('touchstart', event => {
-  touchStartX = event.changedTouches[0].screenX;
-}, { passive:true });
-
-photoCarousel.addEventListener('touchend', event => {
-
-  touchEndX = event.changedTouches[0].screenX;
-
-  const difference = touchEndX - touchStartX;
-
-  if (Math.abs(difference) > 45) {
-    changePhoto(difference < 0 ? 1 : -1);
-  }
-
-}, { passive:true });
-
-/* Keyboard navigation when the carousel is focused */
-
-document.addEventListener('keydown', event => {
-
-  if (event.key === 'ArrowRight') {
-    changePhoto(1);
-  }
-
-  if (event.key === 'ArrowLeft') {
-    changePhoto(-1);
-  }
-
-});
-
-updatePhotoCarousel();
 
 
   <!-- PDF INVITATIONS -->
@@ -1651,7 +1537,121 @@ makeFireflies(
   window.innerWidth < 600 ? 18 : 32,
   .45
 );
+/* ============================================================
+   8. CINEMATIC FRAMES OF US PHOTO CAROUSEL
+   ============================================================ */
 
+const photoSlides = [
+  ...document.querySelectorAll('.photo-slide')
+];
+
+const photoCounter = document.getElementById('photoCounter');
+const photoCarousel = document.getElementById('photoCarousel');
+
+let activePhoto = 0;
+
+function updatePhotoCarousel() {
+
+  const total = photoSlides.length;
+
+  photoSlides.forEach((slide, index) => {
+
+    slide.className = 'photo-slide';
+
+    const position = (index - activePhoto + total) % total;
+
+    if (position === 0) {
+      slide.classList.add('active');
+    }
+    else if (position === 1) {
+      slide.classList.add('next');
+    }
+    else if (position === total - 1) {
+      slide.classList.add('previous');
+    }
+    else if (position <= total / 2) {
+      slide.classList.add('hidden-right');
+    }
+    else {
+      slide.classList.add('hidden-left');
+    }
+
+    const image = slide.querySelector('img');
+
+    function setBackdrop() {
+      if (image.naturalWidth > 0) {
+        slide.style.setProperty(
+          '--photo-background',
+          `url("${image.src}")`
+        );
+      }
+    }
+
+    if (image.complete) {
+      setBackdrop();
+    } else {
+      image.addEventListener('load', setBackdrop, { once:true });
+    }
+
+  });
+
+  photoCounter.textContent =
+    String(activePhoto + 1).padStart(2, '0') +
+    ' / ' +
+    String(total).padStart(2, '0');
+}
+
+function changePhoto(direction) {
+
+  activePhoto =
+    (activePhoto + direction + photoSlides.length) %
+    photoSlides.length;
+
+  updatePhotoCarousel();
+}
+
+document.getElementById('previousPhoto')
+  .addEventListener('click', () => changePhoto(-1));
+
+document.getElementById('nextPhoto')
+  .addEventListener('click', () => changePhoto(1));
+
+/* Touch swipe support for mobile */
+
+let touchStartX = 0;
+let touchEndX = 0;
+
+photoCarousel.addEventListener('touchstart', event => {
+  touchStartX = event.changedTouches[0].screenX;
+}, { passive:true });
+
+photoCarousel.addEventListener('touchend', event => {
+
+  touchEndX = event.changedTouches[0].screenX;
+
+  const difference = touchEndX - touchStartX;
+
+  if (Math.abs(difference) > 45) {
+    changePhoto(difference < 0 ? 1 : -1);
+  }
+
+}, { passive:true });
+
+/* Keyboard navigation when the carousel is focused */
+
+document.addEventListener('keydown', event => {
+
+  if (event.key === 'ArrowRight') {
+    changePhoto(1);
+  }
+
+  if (event.key === 'ArrowLeft') {
+    changePhoto(-1);
+  }
+
+});
+
+updatePhotoCarousel();
 </script>
 
 </body>
