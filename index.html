@@ -1,4 +1,375 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#24121b">
+<meta name="description" content="Deep and Disha — a celebration of love, 28–31 January 2027.">
+<title>Deep & Disha | A Celebration of Love</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@300;400;500;600;700&family=Noto+Serif+Bengali:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --wine:#351923;
+  --wine-dark:#1d1018;
+  --ivory:#f5efe4;
+  --paper:#fbf7ef;
+  --gold:#c5a56c;
+  --gold-light:#e7d3a6;
+  --sage:#657567;
+  --serif:'Bodoni Moda',Georgia,serif;
+  --editorial:'Cormorant Garamond',Georgia,serif;
+  --sans:'Manrope',Arial,sans-serif;
+  --bengali:'Noto Serif Bengali',serif;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:75px}
+body{margin:0;background:var(--paper);color:#30242a;font-family:var(--sans);font-weight:300}
+body.locked{overflow:hidden}
+a{color:inherit}
+button{font:inherit}
+img{display:block;max-width:100%}
+.serif{font-family:var(--serif)}
+.bengali{font-family:var(--bengali)}
+.eyebrow{font-size:.65rem;font-weight:600;letter-spacing:.24em;text-transform:uppercase}
+.kicker{color:var(--gold);margin-bottom:18px}
+.script{font-family:var(--editorial);font-style:italic}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .9s ease,transform .9s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.ornament{display:flex;align-items:center;justify-content:center;gap:14px;color:var(--gold);margin:26px auto}
+.ornament:before,.ornament:after{content:"";height:1px;width:55px;background:currentColor}
+
+/* GOLDEN SCROLL PROGRESS */
+#scrollProgress{
+  position:fixed;top:0;left:0;width:100%;height:3px;
+  z-index:2000;background:rgba(197,165,108,.15);
+}
+#scrollProgressFill{
+  width:0%;height:100%;
+  background:linear-gradient(90deg,#8d6840,#e8d19b,#b18b53,#f0dfb8);
+  box-shadow:0 0 9px rgba(220,185,115,.65);
+}
+
+/* OPENING SCREEN */
+#opening{
+  position:fixed;inset:0;z-index:1000;display:grid;place-items:center;
+  overflow:hidden;padding:22px;color:var(--ivory);
+  background:radial-gradient(ellipse at 50% 0%,#55303a,#2b1721 50%,#160d14);
+  transition:opacity 1s ease,visibility 1s ease;
+}
+#opening.dismissed{opacity:0;visibility:hidden;pointer-events:none}
+#opening:before{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.12;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.25'/%3E%3C/svg%3E");
+}
+#openingFireflies,#siteFireflies{
+  position:fixed;inset:0;width:100%;height:100%;pointer-events:none;
+}
+#openingFireflies{position:absolute}
+.opening-wrap{position:relative;z-index:2;width:min(570px,100%);text-align:center}
+.opening-top{color:var(--gold-light);margin-bottom:24px}
+.opening-top .eyebrow{font-size:.6rem;letter-spacing:.3em}
+.opening-couple{
+  font:400 clamp(3rem,9vw,5.5rem)/.95 var(--serif);
+  letter-spacing:-.06em;color:#f7eddf;margin:12px 0;
+}
+.opening-date{font-size:.72rem;letter-spacing:.23em}
+.envelope-scene{position:relative;width:min(470px,91vw);height:285px;margin:35px auto 22px;perspective:1400px}
+.envelope{
+  position:absolute;inset:20px 0 0;border:1px solid rgba(224,196,143,.55);
+  border-radius:5px;background:linear-gradient(145deg,#6a3944,#3a1c29 55%,#28141e);
+  box-shadow:0 30px 70px #0006,inset 0 1px #ffffff24;overflow:visible;
+}
+.envelope:before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(145deg,transparent 49.6%,#e0c48f35 50%,transparent 50.4%),
+  linear-gradient(35deg,transparent 49.6%,#e0c48f30 50%,transparent 50.4%);
+}
+.envelope:after{
+  content:"";position:absolute;inset:auto 0 0;height:100%;
+  clip-path:polygon(0 100%,50% 38%,100% 100%);
+  background:linear-gradient(145deg,#542b39,#351923);
+  border-top:1px solid #e0c48f44;pointer-events:none;
+}
+.envelope-flap{
+  position:absolute;z-index:4;top:0;left:0;width:100%;height:58%;
+  transform-origin:top center;clip-path:polygon(0 0,100% 0,50% 100%);
+  background:linear-gradient(155deg,#80505a,#4a2634 72%);
+  transition:transform 1s cubic-bezier(.2,.7,.2,1);backface-visibility:hidden;
+}
+.envelope.open .envelope-flap{transform:rotateX(180deg)}
+
+/* CUSTOM DD MONOGRAM */
+.envelope-mark{
+  position:absolute;z-index:2;top:44%;left:50%;
+  transform:translate(-50%,-50%);
+  width:180px;height:130px;
+}
+.envelope-mark svg{
+  width:100%;height:100%;overflow:visible;
+  filter:drop-shadow(0 2px 8px #d7b77b55);
+}
+.wax-seal{
+  position:absolute;z-index:6;left:50%;top:52%;transform:translate(-50%,-50%);
+  width:72px;height:72px;border:1px solid #e6c989;border-radius:50%;
+  color:#f4dfad;background:radial-gradient(circle at 35% 28%,#bb806b,#792f40 55%,#4e1c2a);
+  box-shadow:0 6px 18px #0005,inset 0 0 0 5px #e6c98930;
+  cursor:pointer;transition:transform .3s,opacity .35s;
+}
+.wax-seal:hover{transform:translate(-50%,-50%) scale(1.08)}
+.wax-seal span{font:500 1.4rem var(--serif)}
+.envelope.open .wax-seal{opacity:0;pointer-events:none}
+.opening-hint{font-size:.63rem;letter-spacing:.19em;text-transform:uppercase;color:#f6ebd6a8}
+.opening-bengali{font:1.05rem var(--bengali);color:var(--gold-light);margin-top:16px}
+
+/* SCRATCH INVITATION */
+.invite-modal{
+  position:fixed;z-index:10;inset:0;padding:20px;display:grid;place-items:center;
+  background:#0c070bcc;backdrop-filter:blur(9px);opacity:0;visibility:hidden;
+  transition:opacity .55s,visibility .55s;
+}
+.invite-modal.show{opacity:1;visibility:visible}
+.invite-card{
+  position:relative;width:min(520px,100%);max-height:92vh;overflow:auto;
+  padding:clamp(30px,6vw,54px);text-align:center;color:#34252a;
+  background:linear-gradient(145deg,#fffaf1,#eee1cc);
+  border:1px solid #c4a66e;outline:1px solid #c4a66e88;outline-offset:-9px;
+  box-shadow:0 30px 100px #0008;
+  transform:translateY(24px) scale(.97);transition:transform .65s;
+}
+.invite-modal.show .invite-card{transform:translateY(0) scale(1)}
+.invite-card .eyebrow{color:#9b7844}
+.invite-card h2{font:400 clamp(2.8rem,8vw,4.2rem)/.95 var(--serif);margin:18px 0 10px}
+.invite-card .date{font-size:.8rem;letter-spacing:.17em;color:#8b6c43}
+.scratch-wrap{
+  position:relative;width:100%;max-width:340px;height:115px;margin:24px auto 14px;
+  border:1px solid #c6a66d;overflow:hidden;background:#fff9ed;
+}
+.scratch-message{position:absolute;inset:0;display:grid;place-content:center;gap:5px}
+.scratch-message strong{font:500 1.5rem var(--serif);color:#654632}
+.scratch-message span{font-size:.7rem;letter-spacing:.1em;color:#806848}
+#scratchCanvas{
+  position:absolute;inset:0;width:100%;height:100%;
+  cursor:crosshair;touch-action:none;transition:opacity .5s;
+}
+#scratchCanvas.cleared{opacity:0;pointer-events:none}
+.scratch-help{font-size:.62rem;letter-spacing:.1em;color:#8e785a}
+.enter-btn,.small-button{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  padding:14px 22px;border:1px solid #997a4d;background:#432633;color:#fbf3e5;
+  text-transform:uppercase;letter-spacing:.12em;font-size:.65rem;cursor:pointer;
+}
+.enter-btn:disabled{opacity:.45;cursor:not-allowed}
+.skip-scratch{
+  display:block;margin:14px auto 0;border:0;background:none;
+  color:#8e785a;text-decoration:underline;cursor:pointer;font-size:.68rem;
+}
+
+/* NAVIGATION */
+#site{opacity:0;visibility:hidden;transition:opacity 1.2s}
+#site.ready{opacity:1;visibility:visible}
+.site-nav{
+  position:sticky;top:0;z-index:50;display:flex;justify-content:space-between;
+  align-items:center;min-height:72px;padding:0 clamp(20px,5vw,76px);
+  background:#1c1217f2;color:#f8efe1;border-bottom:1px solid #ccad772e;
+  backdrop-filter:blur(16px);
+}
+.nav-brand{font:400 1.8rem var(--serif);text-decoration:none}
+.nav-brand span{color:var(--gold);font-style:italic}
+.nav-links{display:flex;gap:clamp(13px,2.5vw,34px)}
+.nav-links a{
+  color:#f8efe1c4;font-size:.6rem;letter-spacing:.14em;
+  text-decoration:none;text-transform:uppercase;
+}
+.nav-links a:hover{color:var(--gold-light)}
+.menu-toggle{display:none;border:0;background:none;color:white;font-size:1.5rem;cursor:pointer}
+
+/* HERO */
+.hero{
+  min-height:min(850px,calc(100svh - 72px));position:relative;display:grid;
+  place-items:center;overflow:hidden;text-align:center;color:#fbf3e7;
+  background:#21151b url('photo1.jpeg') center 42%/cover no-repeat;
+}
+.hero:before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,#140d1875,#160d17bd 55%,#150e15d9);
+}
+.hero-content{position:relative;z-index:2;width:min(900px,90%);padding:90px 0 110px}
+.hero .eyebrow{color:var(--gold-light)}
+.hero h1{
+  font:400 clamp(4.2rem,13vw,10rem)/.77 var(--serif);
+  letter-spacing:-.075em;margin:28px 0;
+}
+.hero h1 span{display:block;color:#e4c995;font:italic .66em/.95 var(--editorial);margin:10px}
+.hero-date{font-size:.7rem;letter-spacing:.28em;color:#f2dfb8}
+.hero-bengali{font:1.2rem var(--bengali);margin-top:25px;color:#fff5e5}
+.scroll-cue{
+  position:absolute;bottom:25px;color:#fff5e5bb;
+  font-size:.57rem;letter-spacing:.2em;text-transform:uppercase;
+}
+.scroll-cue:after{
+  content:"";display:block;height:34px;width:1px;background:var(--gold);
+  margin:12px auto 0;animation:scrollLine 1.8s infinite;
+}
+@keyframes scrollLine{50%{transform:scaleY(.45);opacity:.5}}
+
+/* INTRO */
+.intro-band{
+  text-align:center;padding:82px 24px 88px;
+  background:linear-gradient(130deg,#f9f3e9,#eee2d1 52%,#f8f1e7);
+}
+.intro-band .lead{
+  max-width:770px;margin:auto;color:#5d4a47;
+  font:400 clamp(1.55rem,3vw,2.35rem)/1.35 var(--editorial);
+}
+.intro-band .bengali{color:#9b7950;margin-top:22px;font-size:1.05rem}
+
+/* STORY */
+.story{
+  min-height:720px;position:relative;display:flex;align-items:center;overflow:hidden;
+  color:#fbf0df;background:#17161a url('photo2.jpeg') center/cover no-repeat;
+}
+.story:before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,#0f0d11ed,#130f12c7 46%,#100c0f40);
+}
+.story-content{
+  position:relative;z-index:1;width:min(1200px,100%);
+  margin:auto;padding:105px clamp(25px,8vw,115px);
+}
+.story-copy{max-width:570px}
+.story-copy h2{
+  font:400 clamp(3.5rem,8vw,7rem)/.9 var(--serif);
+  letter-spacing:-.055em;margin:0 0 27px;
+}
+.story-copy h2 em{color:#d9bd8c}
+.story-copy p{font:400 1.32rem/1.5 var(--editorial);color:#fff4e5d4}
+.story-date{margin-top:32px;color:var(--gold-light);font-size:.65rem;letter-spacing:.2em;text-transform:uppercase}
+
+/* PERSONALITIES */
+.words-data{padding:110px clamp(22px,6vw,90px);background:linear-gradient(140deg,#f8f3ea,#eee3d5)}
+.words-head{
+  max-width:1150px;margin:0 auto 52px;display:flex;
+  justify-content:space-between;align-items:end;gap:35px;
+}
+.words-head h2{
+  font:400 clamp(3.4rem,7.5vw,7rem)/.88 var(--serif);
+  letter-spacing:-.06em;margin:0;color:#3a2a30;
+}
+.words-head p{max-width:325px;color:#75615d;font:400 1.25rem/1.4 var(--editorial)}
+.people-grid{max-width:1150px;margin:auto;display:grid;grid-template-columns:1fr 1fr;gap:25px}
+.person-card{
+  position:relative;min-height:590px;overflow:hidden;
+  display:flex;align-items:end;background:#46323a;color:#fff5e8;
+}
+.person-card img{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;transition:transform 1s;
+}
+.person-card:hover img{transform:scale(1.04)}
+.person-card:after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(0deg,#130d11f5,#160f1285 52%,#120c1010);
+}
+.person-copy{position:relative;z-index:1;padding:clamp(25px,4vw,46px)}
+.person-copy .eyebrow{color:var(--gold-light)}
+.person-copy h3{
+  font:400 clamp(3.2rem,6vw,5.3rem)/.88 var(--serif);
+  letter-spacing:-.06em;margin:13px 0 17px;
+}
+.person-copy p{max-width:430px;font:400 1.24rem/1.42 var(--editorial);color:#fff5e8dd;margin:0}
+.chemistry{max-width:950px;margin:95px auto 0;text-align:center;color:#4b353c}
+.chemistry h3{
+  font:400 clamp(2.8rem,6vw,5rem)/.95 var(--serif);
+  margin:0 0 22px;
+}
+.chemistry p{max-width:730px;margin:auto;font:400 1.42rem/1.5 var(--editorial);color:#74605c}
+
+/* FAMILY */
+.family{
+  position:relative;padding:110px 24px 120px;text-align:center;color:#f8f0e4;
+  overflow:hidden;background:radial-gradient(ellipse at 50% 0%,#405246,#26382f 55%,#1d2a25);
+}
+.family:before{
+  content:"";position:absolute;inset:0;opacity:.15;
+  background-image:radial-gradient(circle,#e2c48f 1px,transparent 2px);
+  background-size:78px 78px;
+}
+.family-inner{position:relative;max-width:1000px;margin:auto}
+.family h2{font:400 clamp(3.5rem,8vw,7rem)/.9 var(--serif);letter-spacing:-.06em;margin:0}
+.family-sub{color:#d8c69f;font:400 1.15rem var(--editorial);margin:22px 0 62px}
+.family-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.family-card{padding:42px 25px;border:1px solid #dbc2917a;background:#0a120e29}
+.family-label{color:#ddc38e;font-size:.63rem;letter-spacing:.2em;text-transform:uppercase}
+.family-card h3{font:400 clamp(2.5rem,5vw,4rem)/1 var(--serif);margin:20px 0 10px}
+.family-card p{margin:0;color:#faf3e7cc;font:400 1.25rem/1.7 var(--editorial)}
+.family-blessing{margin:52px auto 0;max-width:650px;font:italic 1.5rem/1.35 var(--editorial);color:#e5d5b7}
+
+/* CELEBRATIONS */
+.celebrations{
+  padding:112px clamp(22px,6vw,90px) 125px;
+  background:linear-gradient(145deg,#f8f3e9,#eadfce);
+}
+.celebrations-head{max-width:1150px;margin:0 auto 60px;text-align:center}
+.celebrations-head h2{
+  color:#3a292f;font:400 clamp(3.7rem,8vw,7rem)/.9 var(--serif);
+  letter-spacing:-.06em;margin:0;
+}
+.celebrations-head p{font:400 1.3rem var(--editorial);color:#7b655c;margin:22px 0}
+.event-list{max-width:1000px;margin:auto;border-top:1px solid #c7b28d}
+.event{
+  display:grid;grid-template-columns:140px 1fr minmax(180px,250px);
+  gap:25px;align-items:center;padding:30px 12px;border-bottom:1px solid #c7b28d;
+}
+.event-date{color:#8d7048;font-size:.72rem;letter-spacing:.13em;text-transform:uppercase}
+.event-date strong{display:block;color:#3b2930;font:400 2.5rem/1 var(--serif)}
+.event-info h3{color:#3b2930;margin:0 0 7px;font:400 2.35rem/1 var(--serif)}
+.event-info p{margin:0;color:#78645c;font:400 1.15rem var(--editorial)}
+.event-venue{text-align:right;color:#695550;font-size:.75rem;line-height:1.7}
+.event-venue a{color:#87683f;text-underline-offset:4px}
+.venue-name{display:block;font-size:.72rem;font-weight:600;letter-spacing:.04em}
+.countdown-wrap{
+  max-width:800px;margin:78px auto 0;text-align:center;padding:43px 20px;
+  color:#f8efe0;background:linear-gradient(135deg,#432833,#241820);
+}
+.countdown-wrap .eyebrow{color:var(--gold-light)}
+.countdown-wrap h3{font:400 clamp(2.2rem,5vw,3.6rem)/1 var(--serif);margin:12px 0 28px}
+.countdown{display:flex;justify-content:center;gap:clamp(17px,5vw,55px)}
+.countdown-item strong{
+  display:block;font:400 clamp(2.1rem,5vw,3.4rem)/1 var(--serif);color:#e6cc98;
+}
+.countdown-item span{
+  display:block;margin-top:7px;font-size:.57rem;letter-spacing:.17em;
+  text-transform:uppercase;color:#fff5e5b3;
+}
+
+/* PRE-WEDDING FILM */
+.film{
+  position:relative;padding:110px 22px 125px;color:#f8f0e5;
+  text-align:center;background:#17151a;
+}
+.film:before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 0%,#794e482e,transparent 58%);
+}
+.film-inner{position:relative;max-width:1050px;margin:auto}
+.film h2{
+  font:400 clamp(3.4rem,7vw,6.5rem)/.9 var(--serif);
+  margin:0;letter-spacing:-.06em;
+}
+.film p{color:#fff5e5b3;font:400 1.25rem var(--editorial);margin:20px 0 38px}
+.video-frame{
+  position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;
+  border:1px solid #dabe8f73;box-shadow:0 25px 75px #0006;background:#09090b;
+}
+.video-frame iframe{width:100%;height:100%;border:0}
+
+
 /* CINEMATIC FRAMES OF US — 3D PHOTO CAROUSEL */
 .gallery {
   position:relative;
@@ -255,3 +626,1033 @@
     height:41px;
   }
 }
+
+
+/* INVITATION PDFS */
+.invitations{
+  padding:105px 22px 115px;text-align:center;color:#3b2930;
+  background:linear-gradient(135deg,#e7d9c5,#f7f0e5 48%,#e8d9c6);
+}
+.invitations h2{
+  font:400 clamp(3.5rem,7vw,6.5rem)/.9 var(--serif);
+  margin:0;letter-spacing:-.06em;
+}
+.invitations>p{color:#78645b;font:400 1.25rem var(--editorial);margin:22px 0 45px}
+.pdf-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:850px;margin:auto}
+.pdf-card{
+  padding:38px 24px;border:1px solid #bca276;background:#fffce585;
+  text-decoration:none;transition:transform .3s,background .3s;
+}
+.pdf-card:hover{transform:translateY(-5px);background:#fffce5e0}
+.pdf-icon{display:block;color:#a2804e;font-size:1.6rem;margin-bottom:17px}
+.pdf-card strong{display:block;font:400 2.2rem var(--serif)}
+.pdf-card span:last-child{
+  display:block;margin-top:10px;color:#8b714c;
+  font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;
+}
+
+/* CLOSING — PHOTO 4 */
+.closing{
+  position:relative;min-height:690px;display:grid;place-items:center;
+  overflow:hidden;padding:90px 22px;text-align:center;color:#f8eee0;
+  background:#1b1118 url('photo4.jpeg') center/cover no-repeat;
+}
+.closing:before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,#130c1799,#130c17d6);
+}
+.closing-content{position:relative;max-width:800px}
+.closing h2{
+  font:400 clamp(3.7rem,9vw,8rem)/.88 var(--serif);
+  letter-spacing:-.065em;margin:20px 0;
+}
+.closing p{color:#fff3e2d1;font:400 1.35rem var(--editorial)}
+.couple-signoff{margin-top:35px;color:#e4c991;font:italic clamp(2.8rem,6vw,4.5rem) var(--serif)}
+footer{
+  padding:24px;text-align:center;color:#fff4e09e;
+  background:#170f14;font-size:.57rem;letter-spacing:.14em;text-transform:uppercase;
+}
+
+/* FIRELIES */
+#siteFireflies{z-index:35;opacity:.32}
+
+/* MOBILE */
+@media(max-width:760px){
+  .site-nav{min-height:64px}
+  .menu-toggle{display:block}
+  .nav-links{
+    position:absolute;top:64px;left:0;right:0;display:none;
+    flex-direction:column;gap:0;padding:8px 22px 18px;
+    background:#1c1217fa;border-bottom:1px solid #ccad7733;
+  }
+  .nav-links.open{display:flex}
+  .nav-links a{padding:13px 0;border-bottom:1px solid #ffffff14}
+  .hero{min-height:min(760px,calc(100svh - 64px));background-position:53% center}
+  .hero h1{font-size:clamp(4rem,17vw,7rem)}
+  .story{min-height:690px;background-position:56% center}
+  .story:before{
+    background:linear-gradient(90deg,#0f0d11e0,#0f0d119c),
+    linear-gradient(0deg,#0f0d1159,transparent);
+  }
+  .story-content{padding:85px 28px}
+  .words-head,.gallery-head{display:block}
+  .words-head p,.gallery-head p{margin-top:22px}
+  .people-grid{grid-template-columns:1fr}
+  .person-card{min-height:570px}
+  .family-grid,.pdf-grid{grid-template-columns:1fr}
+  .event{grid-template-columns:90px 1fr;gap:12px 18px}
+  .event-venue{grid-column:2;text-align:left}
+  .event-date strong{font-size:2rem}
+  .event-info h3{font-size:2rem}
+  .gallery-grid{
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:230px 190px 190px;
+  }
+  .gallery-grid figure:first-child{grid-column:1/3;grid-row:auto}
+  .gallery-grid figure:nth-child(4){grid-column:1/3}
+}
+@media(max-width:430px){
+  .envelope-scene{height:245px}
+  .envelope{inset:18px 0 0}
+  .wax-seal{width:64px;height:64px}
+  .opening-couple{font-size:3.4rem}
+  .invite-card{padding:38px 22px}
+  .intro-band{padding:65px 22px}
+  .countdown{gap:15px}
+  .countdown-item strong{font-size:2rem}
+  .countdown-item span{font-size:.5rem}
+  .gallery-grid{grid-template-rows:200px 155px 155px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*:before,*:after{
+    scroll-behavior:auto!important;animation-duration:.01ms!important;
+    animation-iteration-count:1!important;transition-duration:.01ms!important;
+  }
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+
+<body class="locked">
+
+<!-- GOLDEN SCROLL PROGRESS -->
+<div id="scrollProgress">
+  <div id="scrollProgressFill"></div>
+</div>
+
+<!-- OPENING ENVELOPE -->
+<section id="opening" aria-label="Open the wedding invitation">
+  <canvas id="openingFireflies"></canvas>
+
+  <div class="opening-wrap">
+    <div class="opening-top">
+      <div class="eyebrow">A celebration of love</div>
+      <h1 class="opening-couple">Deep <span class="script">&</span> Disha</h1>
+      <div class="opening-date">29 · 01 · 2027</div>
+    </div>
+
+    <div class="envelope-scene">
+      <div class="envelope" id="envelope">
+
+        <!-- CUSTOM DD MONOGRAM -->
+        <div class="envelope-mark">
+          <svg viewBox="0 0 180 130" role="img" aria-label="Deep and Disha monogram">
+            <defs>
+              <linearGradient id="monogramGold" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#f3dfb2"/>
+                <stop offset="50%" stop-color="#bd965c"/>
+                <stop offset="100%" stop-color="#f0d7a0"/>
+              </linearGradient>
+            </defs>
+
+            <g fill="none" stroke="url(#monogramGold)" stroke-width="2">
+              <path d="M25 16 Q90 -3 155 16"/>
+              <path d="M25 114 Q90 133 155 114"/>
+              <path d="M17 65 Q90 45 163 65" opacity=".55"/>
+            </g>
+
+            <text x="52" y="86"
+              font-family="Bodoni Moda,serif"
+              font-size="91"
+              fill="url(#monogramGold)"
+              text-anchor="middle">D</text>
+
+            <text x="126" y="86"
+              font-family="Bodoni Moda,serif"
+              font-size="91"
+              fill="url(#monogramGold)"
+              text-anchor="middle">D</text>
+
+            <path d="M90 48 C72 33 75 62 90 72 C105 62 108 33 90 48Z"
+              fill="#d8b77e"/>
+            <circle cx="90" cy="13" r="3" fill="#e7d3a6"/>
+            <circle cx="90" cy="117" r="3" fill="#e7d3a6"/>
+          </svg>
+        </div>
+
+        <div class="envelope-flap"></div>
+
+        <button class="wax-seal" id="openSeal" aria-label="Open invitation">
+          <span>D·D</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="opening-hint">Touch the seal to open your invitation</div>
+    <div class="opening-bengali">এক নতুন গল্পের শুরু</div>
+  </div>
+
+  <!-- SCRATCH CARD -->
+  <div class="invite-modal" id="inviteModal" role="dialog" aria-modal="true">
+    <div class="invite-card">
+      <div class="eyebrow">With the blessings of our parents</div>
+      <h2>Deep <span class="script" style="color:#a17d4d">&</span> Disha</h2>
+      <div class="date">29 JANUARY 2027 · 7:00 PM</div>
+      <div class="ornament">✧</div>
+
+      <div class="scratch-wrap" id="scratchWrap">
+        <div class="scratch-message">
+          <strong>Our wedding day</strong>
+          <span>29 JANUARY 2027 · 7:00 PM</span>
+          <span class="bengali">শুভ বিবাহ</span>
+        </div>
+        <canvas id="scratchCanvas"></canvas>
+      </div>
+
+      <p class="scratch-help" id="scratchHelp">Scratch the golden surface to reveal</p>
+      <button class="enter-btn" id="enterSite" disabled>Enter our invitation →</button>
+      <button class="skip-scratch" id="skipScratch">Reveal without scratching</button>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN WEBSITE -->
+<canvas id="siteFireflies" aria-hidden="true"></canvas>
+
+<main id="site">
+
+  <!-- NAVIGATION -->
+  <nav class="site-nav">
+    <a href="#home" class="nav-brand">D<span>&</span>D</a>
+
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">☰</button>
+
+    <div class="nav-links" id="navLinks">
+      <a href="#story">Our story</a>
+      <a href="#people">The two of us</a>
+      <a href="#family">Families</a>
+      <a href="#celebrations">Celebrations</a>
+      <a href="#film">Our film</a>
+      <a href="#invitations">Invitations</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <div class="eyebrow">Together with our families</div>
+      <h1>Deep <span>&</span> Disha</h1>
+      <div class="hero-date">28 — 31 JANUARY 2027 · KOLKATA</div>
+      <div class="hero-bengali">দুটি পথ, একসাথে চলার গল্প</div>
+    </div>
+    <div class="scroll-cue">Scroll to discover</div>
+  </section>
+
+  <!-- INTRODUCTION -->
+  <section class="intro-band">
+    <p class="lead reveal">
+      With the love and blessings of our families, we invite you to be a part of the moments, memories and celebrations that bring us together.
+    </p>
+    <div class="ornament">✦</div>
+    <div class="bengali reveal">আপনাদের উপস্থিতি আমাদের আনন্দকে পূর্ণতা দেবে</div>
+  </section>
+
+  <!-- OUR STORY -->
+  <section class="story" id="story">
+    <div class="story-content">
+      <div class="story-copy reveal">
+        <div class="eyebrow kicker">I · The beginning</div>
+        <h2>One day.<br><em>One street.</em><br>A beginning.</h2>
+
+        <p>
+          It began on 31 July 2019, in the book-lined lanes of College Street.
+          We had both gone book-shopping with our common friends, unaware that
+          an ordinary outing would become the first page of a story of our own.
+        </p>
+
+        <p>
+          What followed began with phone conversations, helping each other
+          with studies, and the little moments through which two people
+          gradually became an important part of each other's lives.
+        </p>
+
+        <div class="story-date">31 July 2019 · College Street, Kolkata</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE TWO OF US -->
+  <section class="words-data" id="people">
+    <div class="words-head reveal">
+      <div>
+        <div class="eyebrow kicker" style="color:#9b7a4a">II · Words × Personalities</div>
+        <h2>Different<br>beginnings.<br>One journey.</h2>
+      </div>
+      <p>Two distinct personalities, two ways of seeing the world—and a life to share.</p>
+    </div>
+
+    <div class="people-grid">
+
+      <!-- GROOM -->
+      <article class="person-card reveal">
+        <img src="Groom.jpeg" alt="Deep Sarkar" loading="lazy">
+        <div class="person-copy">
+          <div class="eyebrow">The groom</div>
+          <h3>Deep<br>Sarkar</h3>
+          <p>
+            Practical and reserved, Deep is more of a listener than a talker.
+            He finds joy in long bike rides, getting lost in a good book,
+            and watching films. Curious by nature, he enjoys exploring life
+            at his own thoughtful pace.
+          </p>
+        </div>
+      </article>
+
+      <!-- BRIDE -->
+      <article class="person-card reveal">
+        <img src="Bride.jpeg" alt="Disha Ghosh" loading="lazy">
+        <div class="person-copy">
+          <div class="eyebrow">The bride</div>
+          <h3>Disha<br>Ghosh</h3>
+          <p>
+            Talkative, expressive and wonderfully impulsive, Disha brings
+            lively energy to everyday moments. She loves cooking exquisite
+            meals, discovering different kinds of food, and expressing
+            herself through dancing and singing.
+          </p>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="chemistry reveal">
+      <div class="eyebrow" style="color:#9b7a4a;margin-bottom:17px">III · The balance</div>
+      <h3>Different notes,<br><em class="script">one beautiful melody.</em></h3>
+      <p>
+        One is practical and reserved; the other is spontaneous and talkative.
+        Deep and Disha may approach life differently, but those differences
+        are part of what makes their bond their own. Between thoughtful plans
+        and unexpected ideas, quiet moments and endless conversations,
+        they continue to find their rhythm together.
+      </p>
+    </div>
+  </section>
+
+  <!-- FAMILIES -->
+  <section class="family" id="family">
+    <div class="family-inner">
+      <div class="eyebrow kicker">IV · The people who made us</div>
+      <h2>The Families</h2>
+      <p class="family-sub">With the blessings of our parents</p>
+
+      <div class="family-grid">
+        <div class="family-card reveal">
+          <div class="family-label">The groom's family</div>
+          <h3>The Sarkars</h3>
+          <p>Ashim Sarkar<br>Alpana Sarkar</p>
+        </div>
+
+        <div class="family-card reveal">
+          <div class="family-label">The bride's family</div>
+          <h3>The Ghoshs</h3>
+          <p>Debashis Ghosh<br>Shampa Ghosh</p>
+        </div>
+      </div>
+
+      <p class="family-blessing">
+        Two families, one celebration, and a lifetime of shared memories.
+      </p>
+    </div>
+  </section>
+
+  <!-- CELEBRATIONS -->
+  <section class="celebrations" id="celebrations">
+    <div class="celebrations-head reveal">
+      <div class="eyebrow kicker" style="color:#967347">V · The celebrations</div>
+      <h2>Save the dates</h2>
+      <p>Four days. A few beautiful occasions. So many reasons to celebrate.</p>
+      <div class="bengali" style="color:#9a7950">আনন্দের আমন্ত্রণ</div>
+    </div>
+
+    <div class="event-list">
+
+      <!-- SANGEET -->
+      <article class="event reveal">
+        <div class="event-date">
+          <strong>28</strong>January 2027
+        </div>
+        <div class="event-info">
+          <h3>Sangeet</h3>
+          <p>7:30 PM onwards</p>
+        </div>
+        <div class="event-venue">
+          <span class="venue-name">Disha's Residence</span>
+          Unsani<br>
+          <a href="https://maps.app.goo.gl/Kv4Pxm9Sb5NYwNv77?g_st=aw" target="_blank" rel="noopener">Get directions ↗</a>
+        </div>
+      </article>
+
+      <!-- GAYE HOLUD -->
+      <article class="event reveal">
+        <div class="event-date">
+          <strong>29</strong>January 2027
+        </div>
+        <div class="event-info">
+          <h3>Gaye Holud</h3>
+          <p>10:00 AM</p>
+        </div>
+        <div class="event-venue">
+          A morning of colour and celebration
+        </div>
+      </article>
+
+      <!-- WEDDING -->
+      <article class="event reveal">
+        <div class="event-date">
+          <strong>29</strong>January 2027
+        </div>
+        <div class="event-info">
+          <h3>The Wedding</h3>
+          <p>7:00 PM</p>
+        </div>
+        <div class="event-venue">
+          <span class="venue-name">Disha's Residence</span>
+          Unsani<br>
+          <a href="https://maps.app.goo.gl/Kv4Pxm9Sb5NYwNv77?g_st=aw" target="_blank" rel="noopener">Get directions ↗</a>
+        </div>
+      </article>
+
+      <!-- RECEPTION -->
+      <article class="event reveal">
+        <div class="event-date">
+          <strong>31</strong>January 2027
+        </div>
+        <div class="event-info">
+          <h3>The Reception</h3>
+          <p>7:30 PM onwards</p>
+        </div>
+        <div class="event-venue">
+          <span class="venue-name">Baba Panchananda Banquet</span>
+          Domjur, Howrah<br>
+          <a href="https://maps.app.goo.gl/Ejjexi5v8hWK9iVt6" target="_blank" rel="noopener">Get directions ↗</a>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- COUNTDOWN -->
+    <div class="countdown-wrap reveal">
+      <div class="eyebrow">Counting down to the wedding</div>
+      <h3>Until we say “I do”</h3>
+
+      <div class="countdown" id="countdown">
+        <div class="countdown-item">
+          <strong id="days">—</strong><span>Days</span>
+        </div>
+        <div class="countdown-item">
+          <strong id="hours">—</strong><span>Hours</span>
+        </div>
+        <div class="countdown-item">
+          <strong id="minutes">—</strong><span>Minutes</span>
+        </div>
+        <div class="countdown-item">
+          <strong id="seconds">—</strong><span>Seconds</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRE-WEDDING FILM -->
+  <section class="film" id="film">
+    <div class="film-inner reveal">
+      <div class="eyebrow kicker">VI · A little glimpse of us</div>
+      <h2>Moments in motion</h2>
+      <p>A small film, holding a few memories close.</p>
+
+      <div class="video-frame">
+        <iframe
+          src="https://www.youtube.com/embed/6ILUTWnOofk"
+          title="Deep and Disha pre-wedding film"
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+  
+/* ============================================================
+   8. CINEMATIC FRAMES OF US PHOTO CAROUSEL
+   ============================================================ */
+
+const photoSlides = [
+  ...document.querySelectorAll('.photo-slide')
+];
+
+const photoCounter = document.getElementById('photoCounter');
+const photoCarousel = document.getElementById('photoCarousel');
+
+let activePhoto = 0;
+
+function updatePhotoCarousel() {
+
+  const total = photoSlides.length;
+
+  photoSlides.forEach((slide, index) => {
+
+    slide.className = 'photo-slide';
+
+    const position = (index - activePhoto + total) % total;
+
+    if (position === 0) {
+      slide.classList.add('active');
+    }
+    else if (position === 1) {
+      slide.classList.add('next');
+    }
+    else if (position === total - 1) {
+      slide.classList.add('previous');
+    }
+    else if (position <= total / 2) {
+      slide.classList.add('hidden-right');
+    }
+    else {
+      slide.classList.add('hidden-left');
+    }
+
+    const image = slide.querySelector('img');
+
+    function setBackdrop() {
+      if (image.naturalWidth > 0) {
+        slide.style.setProperty(
+          '--photo-background',
+          `url("${image.src}")`
+        );
+      }
+    }
+
+    if (image.complete) {
+      setBackdrop();
+    } else {
+      image.addEventListener('load', setBackdrop, { once:true });
+    }
+
+  });
+
+  photoCounter.textContent =
+    String(activePhoto + 1).padStart(2, '0') +
+    ' / ' +
+    String(total).padStart(2, '0');
+}
+
+function changePhoto(direction) {
+
+  activePhoto =
+    (activePhoto + direction + photoSlides.length) %
+    photoSlides.length;
+
+  updatePhotoCarousel();
+}
+
+document.getElementById('previousPhoto')
+  .addEventListener('click', () => changePhoto(-1));
+
+document.getElementById('nextPhoto')
+  .addEventListener('click', () => changePhoto(1));
+
+/* Touch swipe support for mobile */
+
+let touchStartX = 0;
+let touchEndX = 0;
+
+photoCarousel.addEventListener('touchstart', event => {
+  touchStartX = event.changedTouches[0].screenX;
+}, { passive:true });
+
+photoCarousel.addEventListener('touchend', event => {
+
+  touchEndX = event.changedTouches[0].screenX;
+
+  const difference = touchEndX - touchStartX;
+
+  if (Math.abs(difference) > 45) {
+    changePhoto(difference < 0 ? 1 : -1);
+  }
+
+}, { passive:true });
+
+/* Keyboard navigation when the carousel is focused */
+
+document.addEventListener('keydown', event => {
+
+  if (event.key === 'ArrowRight') {
+    changePhoto(1);
+  }
+
+  if (event.key === 'ArrowLeft') {
+    changePhoto(-1);
+  }
+
+});
+
+updatePhotoCarousel();
+
+
+  <!-- PDF INVITATIONS -->
+  <section class="invitations" id="invitations">
+    <div class="eyebrow kicker" style="color:#98784c">VIII · Your invitations</div>
+    <h2>Be with us</h2>
+    <p>
+      We would be delighted to have you celebrate these special occasions with us.
+    </p>
+
+    <div class="pdf-grid">
+      <a class="pdf-card" href="wedding-invitation.pdf" target="_blank" rel="noopener">
+        <span class="pdf-icon">✧</span>
+        <strong>Wedding Invitation</strong>
+        <span>View invitation · PDF ↗</span>
+      </a>
+
+      <a class="pdf-card" href="reception-invitation.pdf" target="_blank" rel="noopener">
+        <span class="pdf-icon">✧</span>
+        <strong>Reception Invitation</strong>
+        <span>View invitation · PDF ↗</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <section class="closing">
+    <div class="closing-content reveal">
+      <div class="eyebrow" style="color:#e4c991">With love & warm wishes</div>
+
+      <h2>
+        We look forward<br>
+        to celebrating<br>
+        <em class="script" style="color:#e4c991">with you.</em>
+      </h2>
+
+      <p>
+        Thank you for being a part of our story.
+        Your presence will make our celebration even more meaningful.
+      </p>
+
+      <div class="ornament">✦</div>
+      <div class="couple-signoff">Deep & Disha</div>
+      <div class="eyebrow" style="margin-top:18px;color:#e4c991">
+        January 2027
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Deep & Disha · 28—31 January 2027 · Made with love
+  </footer>
+
+</main>
+
+<script>
+// ============================================================
+// 1. ENVELOPE OPENING
+// ============================================================
+
+const envelope = document.getElementById('envelope');
+const inviteModal = document.getElementById('inviteModal');
+const opening = document.getElementById('opening');
+const site = document.getElementById('site');
+const enterSite = document.getElementById('enterSite');
+
+document.getElementById('openSeal').addEventListener('click', () => {
+  envelope.classList.add('open');
+
+  setTimeout(() => {
+    inviteModal.classList.add('show');
+  }, 650);
+});
+
+function enterInvitation() {
+  inviteModal.classList.remove('show');
+  opening.classList.add('dismissed');
+  document.body.classList.remove('locked');
+  site.classList.add('ready');
+}
+
+enterSite.addEventListener('click', enterInvitation);
+
+document.getElementById('skipScratch').addEventListener('click', () => {
+  revealScratch();
+});
+
+
+// ============================================================
+// 2. SCRATCH TO REVEAL
+// ============================================================
+
+const scratchCanvas = document.getElementById('scratchCanvas');
+const scratchWrap = document.getElementById('scratchWrap');
+const scratchCtx = scratchCanvas.getContext('2d', {
+  willReadFrequently:true
+});
+
+const scratchHelp = document.getElementById('scratchHelp');
+
+let scratching = false;
+let scratchCleared = false;
+let strokes = 0;
+
+function setupScratch() {
+  const rect = scratchWrap.getBoundingClientRect();
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+  scratchCanvas.width = Math.round(rect.width * dpr);
+  scratchCanvas.height = Math.round(rect.height * dpr);
+
+  scratchCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  const gradient = scratchCtx.createLinearGradient(
+    0, 0, rect.width, rect.height
+  );
+
+  gradient.addColorStop(0, '#d8c08d');
+  gradient.addColorStop(.45, '#f1dfb5');
+  gradient.addColorStop(1, '#b9955d');
+
+  scratchCtx.globalCompositeOperation = 'source-over';
+  scratchCtx.fillStyle = gradient;
+  scratchCtx.fillRect(0, 0, rect.width, rect.height);
+
+  scratchCtx.strokeStyle = 'rgba(255,250,230,.45)';
+  scratchCtx.lineWidth = 1;
+
+  for (let x = -rect.height; x < rect.width + rect.height; x += 13) {
+    scratchCtx.beginPath();
+    scratchCtx.moveTo(x, 0);
+    scratchCtx.lineTo(x + rect.height, rect.height);
+    scratchCtx.stroke();
+  }
+
+  scratchCtx.fillStyle = 'rgba(89,63,34,.72)';
+  scratchCtx.font = '600 10px Manrope,Arial,sans-serif';
+  scratchCtx.textAlign = 'center';
+
+  scratchCtx.fillText(
+    'SCRATCH HERE  ✧  SCRATCH HERE',
+    rect.width / 2,
+    rect.height / 2 + 4
+  );
+
+  scratchCtx.globalCompositeOperation = 'destination-out';
+}
+
+function scratchAt(event) {
+  if (!scratching || scratchCleared) return;
+
+  const rect = scratchCanvas.getBoundingClientRect();
+
+  const x = event.clientX - rect.left;
+  const y = event.clientY - rect.top;
+
+  scratchCtx.beginPath();
+  scratchCtx.arc(x, y, 23, 0, Math.PI * 2);
+  scratchCtx.fill();
+
+  strokes++;
+
+  if (strokes % 7 === 0) {
+    checkScratch();
+  }
+}
+
+function checkScratch() {
+  try {
+    const data = scratchCtx.getImageData(
+      0, 0, scratchCanvas.width, scratchCanvas.height
+    ).data;
+
+    let transparent = 0;
+    let total = 0;
+
+    for (let i = 3; i < data.length; i += 36) {
+      total++;
+
+      if (data[i] < 100) {
+        transparent++;
+      }
+    }
+
+    if (total && transparent / total > .34) {
+      revealScratch();
+    }
+  } catch (e) {
+    // The visitor can use the reveal button if sampling is unavailable.
+  }
+}
+
+function revealScratch() {
+  if (scratchCleared) return;
+
+  scratchCleared = true;
+  scratchCanvas.classList.add('cleared');
+
+  scratchHelp.textContent =
+    'The date is revealed — we hope to celebrate with you.';
+
+  enterSite.disabled = false;
+}
+
+scratchCanvas.addEventListener('pointerdown', event => {
+  if (scratchCleared) return;
+
+  scratching = true;
+  scratchCanvas.setPointerCapture(event.pointerId);
+  scratchAt(event);
+});
+
+scratchCanvas.addEventListener('pointermove', scratchAt);
+
+['pointerup','pointercancel','lostpointercapture'].forEach(type => {
+  scratchCanvas.addEventListener(type, () => {
+    scratching = false;
+  });
+});
+
+window.addEventListener('load', setupScratch);
+
+window.addEventListener('resize', () => {
+  if (!scratchCleared) {
+    setupScratch();
+  }
+});
+
+
+// ============================================================
+// 3. WEDDING COUNTDOWN
+// 29 JANUARY 2027, 7:00 PM IST
+// ============================================================
+
+const weddingDate = new Date(
+  '2027-01-29T19:00:00+05:30'
+).getTime();
+
+function updateCountdown() {
+  const remaining = weddingDate - Date.now();
+
+  if (remaining <= 0) {
+    document.getElementById('countdown').innerHTML =
+      '<div class="countdown-item"><strong>Today</strong><span>Our wedding day</span></div>';
+    return;
+  }
+
+  document.getElementById('days').textContent =
+    Math.floor(remaining / 86400000);
+
+  document.getElementById('hours').textContent =
+    String(Math.floor((remaining % 86400000) / 3600000)).padStart(2,'0');
+
+  document.getElementById('minutes').textContent =
+    String(Math.floor((remaining % 3600000) / 60000)).padStart(2,'0');
+
+  document.getElementById('seconds').textContent =
+    String(Math.floor((remaining % 60000) / 1000)).padStart(2,'0');
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+
+// ============================================================
+// 4. SCROLL REVEAL ANIMATIONS
+// ============================================================
+
+const observer = new IntersectionObserver((entries, obs) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      obs.unobserve(entry.target);
+    }
+  });
+}, {
+  threshold:.13
+});
+
+document.querySelectorAll('.reveal').forEach(el => {
+  observer.observe(el);
+});
+
+
+// ============================================================
+// 5. MOBILE NAVIGATION
+// ============================================================
+
+const menuToggle = document.getElementById('menuToggle');
+const navLinks = document.getElementById('navLinks');
+
+menuToggle.addEventListener('click', () => {
+  const open = navLinks.classList.toggle('open');
+
+  menuToggle.setAttribute('aria-expanded', String(open));
+  menuToggle.textContent = open ? '×' : '☰';
+});
+
+navLinks.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    menuToggle.textContent = '☰';
+  });
+});
+
+
+// ============================================================
+// 6. GOLDEN SCROLL PROGRESS BAR
+// ============================================================
+
+const progressFill = document.getElementById('scrollProgressFill');
+
+function updateScrollProgress() {
+  const scrollable =
+    document.documentElement.scrollHeight - window.innerHeight;
+
+  const progress = scrollable > 0
+    ? (window.scrollY / scrollable) * 100
+    : 0;
+
+  progressFill.style.width = `${progress}%`;
+}
+
+window.addEventListener(
+  'scroll',
+  updateScrollProgress,
+  { passive:true }
+);
+
+window.addEventListener('resize', updateScrollProgress);
+
+updateScrollProgress();
+
+
+// ============================================================
+// 7. GOLDEN FIREFLIES
+// ============================================================
+
+function makeFireflies(canvasId, amount, opacity) {
+  const canvas = document.getElementById(canvasId);
+  const ctx = canvas.getContext('2d');
+
+  const reduceMotion = window.matchMedia(
+    '(prefers-reduced-motion: reduce)'
+  ).matches;
+
+  let w = 0;
+  let h = 0;
+  let particles = [];
+
+  function resize() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+    w = window.innerWidth;
+    h = window.innerHeight;
+
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+
+    particles = Array.from({length:amount}, () => ({
+      x:Math.random()*w,
+      y:Math.random()*h,
+      r:.7+Math.random()*1.5,
+      phase:Math.random()*Math.PI*2,
+      speed:.12+Math.random()*.38,
+      drift:(Math.random()-.5)*.22,
+      alpha:.2+Math.random()*.55
+    }));
+  }
+
+  function draw() {
+    ctx.clearRect(0,0,w,h);
+
+    const time = performance.now()*.001;
+
+    particles.forEach(p => {
+      p.y -= p.speed*.22;
+      p.x += p.drift;
+
+      if (p.y < -8) {
+        p.y = h+8;
+        p.x = Math.random()*w;
+      }
+
+      if (p.x < -8) p.x = w+8;
+      if (p.x > w+8) p.x = -8;
+
+      const pulse =
+        .35+.65*(Math.sin(time*1.3+p.phase)*.5+.5);
+
+      const alpha = p.alpha*pulse*opacity;
+
+      const glow = ctx.createRadialGradient(
+        p.x,p.y,0,p.x,p.y,p.r*7
+      );
+
+      glow.addColorStop(
+        0,`rgba(255,220,151,${alpha})`
+      );
+
+      glow.addColorStop(
+        1,'rgba(255,197,112,0)'
+      );
+
+      ctx.fillStyle = glow;
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r*7,0,Math.PI*2);
+      ctx.fill();
+
+      ctx.fillStyle = `rgba(255,232,184,${alpha})`;
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fill();
+    });
+
+    if (!reduceMotion) {
+      requestAnimationFrame(draw);
+    }
+  }
+
+  resize();
+
+  if (!reduceMotion) {
+    draw();
+  }
+
+  window.addEventListener('resize',resize);
+}
+
+makeFireflies(
+  'openingFireflies',
+  window.innerWidth < 600 ? 24 : 42,
+  .8
+);
+
+makeFireflies(
+  'siteFireflies',
+  window.innerWidth < 600 ? 18 : 32,
+  .45
+);
+
+</script>
+
+</body>
+</html>
